@@ -1,10 +1,11 @@
 Name:           libgovirt
 Version:        0.3.4
-Release:        10
+Release:        11
 Summary:        A GObject-based library to access oVirt REST API
 License:        LGPLv2+
 URL:            http://people.freedesktop.org/~teuf/govirt/
 Source0:        http://ftp.gnome.org/pub/GNOME/sources/libgovirt/0.3/%{name}-%{version}.tar.xz
+Patch6000:      Update-tests-certificates.patch
 
 BuildRequires:  glib2-devel intltool rest-devel >= 0.7.92
 BuildRequires:  gobject-introspection-devel glib-networking dconf gnupg2
@@ -59,6 +60,9 @@ make check
 %{_datadir}/gir-1.0/GoVirt-1.0.gir
 
 %changelog
+* Fri May 22 2020 huanghaitao<huanghaitao8@huawei.com> - 0.3.4-11
+- Update tests certificates to fix test error
+
 * Fri Jan 10 2020 yangjian<yangjian79@huawei.com> - 0.3.4-10
 - Change the Source to valid address
 
