@@ -1,13 +1,15 @@
 Name:           libgovirt
-Version:        0.3.8
+Version:        0.3.9
 Release:        1
 Summary:        A GObject-based library to access oVirt REST API
 License:        LGPLv2+
-URL:            http://people.freedesktop.org/~teuf/govirt/
+URL:            https://gitlab.gnome.org/GNOME/libgovirt
 Source0:        http://ftp.gnome.org/pub/GNOME/sources/libgovirt/0.3/%{name}-%{version}.tar.xz
+Patch1:         0001-Fix-i18n-generation.patch
 
-BuildRequires:  glib2-devel intltool rest-devel >= 0.7.92
+BuildRequires:  glib2-devel intltool rest-devel >= 0.9.1
 BuildRequires:  gobject-introspection-devel glib-networking dconf gnupg2
+BuildRequires:  meson
 
 %description
 GoVirt is a GObject wrapper for the oVirt REST API [1]. It will
@@ -28,16 +30,16 @@ that use libgovirt.
 %autosetup -n %{name}-%{version} -p1
 
 %build
-%configure --enable-introspection=yes
-%make_build
+%meson
+%meson_build
 
 %install
-%make_install
+%meson_install
 %delete_la_and_a
 %find_lang %{name} --with-gnome
 
 %check
-make check
+%meson_test
 
 %post
 /sbin/ldconfig
@@ -59,6 +61,9 @@ make check
 %{_datadir}/gir-1.0/GoVirt-1.0.gir
 
 %changelog
+* Fri Dec 2 2022 lin zhang <lin.zhang@turbolinux.com.cn> - 0.3.9-1
+- Upgrade to version 0.3.9
+
 * Thu Jun 16 2022 SimpleUpdate Robot <tc@openeuler.org> - 0.3.8-1
 - Upgrade to version 0.3.8
 
