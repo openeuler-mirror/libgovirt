@@ -1,6 +1,6 @@
 Name:           libgovirt
 Version:        0.3.9
-Release:        1
+Release:        2
 Summary:        A GObject-based library to access oVirt REST API
 License:        LGPLv2+
 URL:            https://gitlab.gnome.org/GNOME/libgovirt
@@ -30,6 +30,10 @@ that use libgovirt.
 %autosetup -n %{name}-%{version} -p1
 
 %build
+%if "%toolchain" == "clang"
+	export CFLAGS="$CFLAGS -Wno-error=unknown-warning-option -Wno-error=typedef-redefinition -Wno-error=missing-field-initializers -Wno-error=cast-align"
+	export CXXFLAGS="$CXXFLAGS -Wno-error=unknown-warning-option -Wno-error=typedef-redefinition -Wno-error=missing-field-initializers -Wno-error=cast-align"
+%endif
 %meson
 %meson_build
 
@@ -61,6 +65,9 @@ that use libgovirt.
 %{_datadir}/gir-1.0/GoVirt-1.0.gir
 
 %changelog
+* Wed Jun 28 2023 yoo <sunyuechi@iscas.ac.cn> - 0.3.9-2
+- fix clang build error
+
 * Fri Dec 2 2022 lin zhang <lin.zhang@turbolinux.com.cn> - 0.3.9-1
 - Upgrade to version 0.3.9
 
